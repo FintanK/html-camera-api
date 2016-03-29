@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Camera API Example With Image Filters</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+    <style>
+        canvas {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body class="container">
+
+    <section class="row">
+        <h1>Camera API Example With Image Filters</h1>
+        <p>Image filter effects implemented using CamanJS</p>
+    </section>
+
+    <section class="row">
+        <div class="col-sm-6">
+            <video id="video" class="col-sm-12" height="200" autoplay></video>
+        </div>
+    </section>
+
+    <section class="row">
+        <div class="col-sm-12">
+            <button id="snap">Take Photo</button>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <nav class="filters">
+                <button id="brightnessbtn" class="btn btn-primary">Brightness</button>
+                <button id="noisebtn" class="btn btn-primary">Noise</button>
+                <button id="sepiabtn" class="btn btn-primary">Sepia</button>
+                <button id="contrastbtn" class="btn btn-primary">Contrast</button>
+                <button id="colorbtn" class="btn btn-primary">Colorize</button>
+            </nav>
+
+            <nav class="filters">
+                <button id="vintagebtn" class="btn btn-primary">Vintage</button>
+                <button id="lomobtn" class="btn btn-primary">Lomo</button>
+                <button id="embossbtn" class="btn btn-primary">Emboss</button>
+                <button id="tiltshiftbtn" class="btn btn-primary">Tilt Shift</button>
+                <button id="radialblurbtn" class="btn btn-primary">Radial Blur</button>
+                <button id="edgeenhancebtn" class="btn btn-primary">Edge Enhance</button>
+            </nav>
+
+            <nav class="filters">
+                <button id="posterizebtn" class="btn btn-primary">Posterize</button>
+                <button id="claritybtn" class="btn btn-primary">Clarity</button>
+                <button id="orangepeelbtn" class="btn btn-primary">Orange Peel</button>
+                <button id="sincitybtn" class="btn btn-primary">Sin City</button>
+                <button id="sunrisebtn" class="btn btn-primary">Sun Rise</button>
+                <button id="crossprocessbtn" class="btn btn-primary">Cross Process</button>
+            </nav>
+
+            <nav class="filters">
+                <button id="hazydaysbtn" class="btn btn-primary">Hazy</button>
+                <button id="lovebtn" class="btn btn-primary">Love</button>
+                <button id="grungybtn" class="btn btn-primary">Grungy</button>
+                <button id="jarquesbtn" class="btn btn-primary">Jarques</button>
+                <button id="pinholebtn" class="btn btn-primary">Pin Hole</button>
+                <button id="oldbootbtn" class="btn btn-primary">Old Boot</button>
+                <button id="glowingsunbtn" class="btn btn-primary">Glow Sun</button>
+            </nav>
+    </div>
+
+    <div class="row">
+        <canvas id="canvas" height="480" width="640"></canvas>
+    </div>
+
+    <script type="text/javascript">
+
+        var img = new Image();
+        var canvas = document.getElementById('canvas');
+
+        img.crossOrigin = '';
+        img.src = canvas.toDataURL();
+
+        var $brightness = $('#brightnessbtn');
+        var $noise = $('#noisebtn');
+        var $sepia = $('#sepiabtn');
+        var $contrast = $('#contrastbtn');
+        var $color = $('#colorbtn');
+
+        var $vintage = $('#vintagebtn');
+        var $lomo = $('#lomobtn');
+        var $emboss = $('#embossbtn');
+        var $tiltshift = $('#tiltshiftbtn');
+        var $radialblur = $('#radialblurbtn');
+        var $edgeenhance = $('#edgeenhancebtn');
+
+        var $posterize = $('#posterizebtn');
+        var $clarity = $('#claritybtn');
+        var $orangepeel = $('#orangepeelbtn');
+        var $sincity = $('#sincitybtn');
+        var $sunrise = $('#sunrisebtn');
+        var $crossprocess = $('#crossprocessbtn');
+
+        var $hazydays = $('#hazydaysbtn');
+        var $love = $('#lovebtn');
+        var $grungy = $('#grungybtn');
+        var $jarques = $('#jarquesbtn');
+        var $pinhole = $('#pinholebtn');
+        var $oldboot = $('#oldbootbtn');
+        var $glowingsun = $('#glowingsunbtn');
+
+
+        /* In built filters */
+        $brightness.on('click', function(e) {
+            Caman('#canvas', function() {
+                this.brightness(30).render();
+            });
+        });
+
+        $noise.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.noise(10).render();
+            });
+        });
+
+        $contrast.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.contrast(10).render();
+            });
+        });
+
+        $sepia.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.sepia(20).render();
+            });
+        });
+
+        $color.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.colorize(60, 105, 218, 10).render();
+            });
+        });
+
+        $vintage.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.vintage().render();
+            });
+        });
+
+        $lomo.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.lomo().render();
+            });
+        });
+
+        $emboss.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.emboss().render();
+            });
+        });
+
+        $tiltshift.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.tiltShift({
+                    angle: 90,
+                    focusWidth: 600
+                }).render();
+            });
+        });
+
+        $radialblur.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.radialBlur().render();
+            });
+        });
+
+        $edgeenhance.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.edgeEnhance().render();
+            });
+        });
+
+        $posterize.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.posterize(8, 8).render();
+            });
+        });
+
+        $clarity.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.clarity().render();
+            });
+        });
+
+        $orangepeel.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.orangePeel().render();
+            });
+        });
+
+        $sincity.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.sinCity().render();
+            });
+        });
+
+        $sunrise.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.sunrise().render();
+            });
+        });
+
+        $crossprocess.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.crossProcess().render();
+            });
+        });
+
+        $love.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.love().render();
+            });
+        });
+
+        $grungy.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.grungy().render();
+            });
+        });
+
+        $jarques.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.jarques().render();
+            });
+        });
+
+        $pinhole.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.pinhole().render();
+            });
+        });
+
+        $oldboot.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.oldBoot().render();
+            });
+        });
+
+        $glowingsun.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.glowingSun().render();
+            });
+        });
+
+        $hazydays.on('click', function(e) {
+            Caman('#canvas', img, function() {
+                this.hazyDays().render();
+            });
+        });
+
+
+
+
+
+        // Page load and camera logic
+        window.addEventListener("DOMContentLoaded", function() {
+            // Grab elements, create settings, etc.
+            var canvas = document.getElementById("canvas"),
+                    context = canvas.getContext("2d"),
+                    video = document.getElementById("video"),
+                    videoObj = { "video": true },
+                    errBack = function(error) {
+                        console.log("Video capture error: ", error.code);
+                    };
+
+            // Put video listeners into place
+            if(navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(videoObj, function(stream) {
+                    video.src = stream;
+                    video.play();
+                }, errBack);
+            } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+                navigator.webkitGetUserMedia(videoObj, function(stream){
+                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+            else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+                navigator.mozGetUserMedia(videoObj, function(stream){
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+
+            // Take a photo and draw it onto the canvas element
+            document.getElementById("snap").addEventListener("click", function() {
+                context.drawImage(video, 0, 0, 640, 480);
+            });
+
+            function downloadCanvas(link, canvasId, filename) {
+                link.href = document.getElementById(canvasId).toDataURL();
+                link.download = filename;
+            }
+
+
+            document.getElementById('download').addEventListener('click', function() {
+                downloadCanvas(this, 'canvas', 'image.png');
+            }, false);
+
+        }, false);
+
+    </script>
+
+</body>
+</html>
